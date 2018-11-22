@@ -1,6 +1,6 @@
-class MicropostesController < ApplicationController
+class MicropostsController < ApplicationController
   before_action :require_user_logged_in
-  before_action :correct_user, only: [:destory]
+  before_action :correct_user, only: [:destroy]
   
   def create
     @micropost = current_user.microposts.build(micropost_params)
@@ -10,11 +10,11 @@ class MicropostesController < ApplicationController
     else
       @microposts = current_user.microposts.order('created_at DESC').page(params[:page])
       flash.now[:danger] = 'メッセージの投稿に失敗しました。'
-      render 'toppages/index' 
+      render 'toppages/index'
     end
   end
   
-  def destory
+  def destroy
     @micropost.destroy
     flash[:success] = 'メッセージを削除しました。'
     redirect_back(fallback_location: root_path)
